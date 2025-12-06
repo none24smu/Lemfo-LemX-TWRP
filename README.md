@@ -20,7 +20,7 @@ TWRP device tree for the LEMX Android smartwatch (MT6739).
 - [x] ADB in recovery
 - [x] MTP support
 - [x] Round screen support (watch_mdpi theme)
-- [x] Touchscreen
+- [x] Touchscreen (tested, fully functional)
 - [x] Backlight control
 - [x] Decryption (device not encrypted - optional encryption)
 - [x] USB OTG (kernel supports OTG, needs physical adapter to test)
