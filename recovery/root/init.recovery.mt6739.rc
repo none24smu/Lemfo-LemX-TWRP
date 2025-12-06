@@ -1,0 +1,31 @@
+on init
+    # Set USB configuration for recovery mode
+    write /sys/class/android_usb/android0/f_ffs/aliases adb
+    write /sys/class/android_usb/android0/enable 0
+    write /sys/class/android_usb/android0/idVendor 0E8D
+    write /sys/class/android_usb/android0/idProduct 2008
+    write /sys/class/android_usb/android0/functions adb
+    write /sys/class/android_usb/android0/enable 1
+
+    # Set USB charge detect mode
+    write /sys/devices/platform/mt_usb/cmode 2
+
+on property:ro.debuggable=1
+    # Restore cmode to normal for USB enumeration
+    write /sys/devices/platform/mt_usb/cmode 1
+
+on fs
+    # Mount required partitions
+    mkdir /mnt/vendor 0755 root root
+
+on post-fs
+    # Start required services for recovery
+    start boot-hal-1-0
+
+service boot-hal-1-0 /vendor/bin/hw/android.hardware.boot@1.0-service
+    interface android.hardware.boot@1.0::IBootControl default
+    class hal
+    user root
+    group root
+    disabled
+
